@@ -1,0 +1,57 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+
+class StringCommander
+{
+    static void Main()
+    {
+        var inputLine = Console.ReadLine();
+        var inputCommand = Console.ReadLine();
+        var currentIndex = 0;
+
+        while (inputCommand != "end")
+        {
+            var tokens = inputCommand.Split(' ');
+            var command = tokens[0];
+
+            switch (command)
+            {
+                case "Left":
+                    int countLeft = int.Parse(tokens[1]);
+
+                    countLeft %= inputLine.Length;
+                    inputLine = inputLine
+                        .Substring(countLeft) + inputLine.Substring(0, countLeft);
+                    break;
+                case "Right":
+                    int countRight = int.Parse(tokens[1]);
+
+                    countRight %= inputLine.Length;
+                    inputLine = inputLine
+                        .Substring(inputLine.Length - countRight) + inputLine.Substring(0, inputLine.Length - countRight);
+
+                    break;
+                case "Insert":
+                    int index = int.Parse(tokens[1]);
+                    string symbols = tokens[2];
+
+                    inputLine = inputLine.Insert(index, symbols);
+
+                    break;
+                case "Delete":
+                    int startIndex = int.Parse(tokens[1]);
+                    int endIndex = int.Parse(tokens[2]);
+
+                    inputLine = inputLine.Remove(startIndex, endIndex - startIndex + 1);
+
+                    break;
+            }
+
+            inputCommand = Console.ReadLine();
+        }
+
+        Console.WriteLine(inputLine);
+    }
+}
+
